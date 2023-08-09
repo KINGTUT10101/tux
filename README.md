@@ -1,6 +1,6 @@
-# SUIT
+# TUX
 
-Simple User Interface Toolkit for LÖVE.
+An improved version of SUIT with more components, a better layout system, and a GUI manager. This project will be updated once I finish my current project, Just Another Sand Game.
 
 SUIT is an immediate mode GUI library.
 
