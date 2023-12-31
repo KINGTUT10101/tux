@@ -3,7 +3,7 @@
 local BASE = (...):match('(.-)[^%.]+$')
 
 local theme = {}
-theme.cornerRadius = 4
+theme.cornerRadius = 2
 
 local function drawDefaultSlice (self, x, y, w, h)
 	love.graphics.rectangle ("line", x, y, w, h)
@@ -199,8 +199,7 @@ function theme.Button(text, opt, x, y, w, h)
 end
 
 function theme.Checkbox(chk, opt, x, y, w, h)
-	local c = theme.getColorForState(opt)
-	local th = opt.font:getHeight()
+	local renderColor = theme.getColorForState(opt)
 
 	theme.drawBox(x+h/10, y+h/10, h*.8, h*.8, opt)
 
@@ -208,13 +207,13 @@ function theme.Checkbox(chk, opt, x, y, w, h)
 		love.graphics.setLineStyle('smooth')
 		love.graphics.setLineWidth(5)
 		love.graphics.setLineJoin("bevel")
+		love.graphics.setColor (renderColor.fg)
 		love.graphics.line(x+h*.2, y+h*.55, x+h*.45, y+h*.75, x+h*.8, y+h*.2)
 	end
 
 	if chk.text then
-		y = y + theme.getVerticalOffsetForAlign(opt.valign, opt.font, h)
 		opt.align = opt.align or "left"
-		theme.drawText (chk.text, x + h, y, w - h, opt)
+		theme.drawText (chk.text, x, y, w, h, opt)
 	end
 end
 
@@ -232,6 +231,7 @@ function theme.Slider(fraction, opt, x, y, w, h)
 	theme.drawBox(x,y,w,h, opt)
 
 	local renderColor = theme.getColorForState(opt)
+	opt.color = opt.color or {}
 	opt.color[opt.state] = {bg=renderColor.fg}
 	theme.drawBox(xb, yb, wb, hb, opt)
 
@@ -245,7 +245,7 @@ function theme.Slider(fraction, opt, x, y, w, h)
 	end
 end
 
-function theme.Input(input, opt, x,y,w,h)
+function theme.Input(input, opt, x, y, w, h)
 	opt.state = "normal" -- Prevents the label from changing state
 	opt.align = "left"
 	opt.valign = "top"
