@@ -183,7 +183,8 @@ function theme.drawImage (image, x, y, w, h, opt)
 	end
 end
 
--- WIDGET VIEWS
+--- A simple box meant to display some content. It does not change appearance.
+-- It will always render as if its state is normal.
 function theme.Label(text, opt, x,y,w,h)
 	opt.state = "normal" -- Prevents the label from changing state
 
@@ -254,6 +255,9 @@ function theme.Slider(fraction, opt, x, y, w, h)
 	end
 end
 
+--- An input box that supports multiline text editing and keyboard navigation.
+-- Alignment is ignored and always set to the top-left
+-- Set opt.highlight to false to remove the highlight when users are typing in the box
 function theme.Input(input, opt, x, y, w, h)
 	opt.state = "normal" -- Prevents the label from changing state
 	opt.align = "left"
@@ -267,7 +271,6 @@ function theme.Input(input, opt, x, y, w, h)
 
 	-- candidate text
 	theme.drawText (input.candidate_text.text, x, y, w, h, opt)
-
 	
 	-- candidate text rectangle box
 	if opt.hasKeyboardFocus and opt.highlight ~= false then
