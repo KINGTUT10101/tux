@@ -7,6 +7,8 @@ local default_theme = require(BASE..'theme')
 local suit = {}
 suit.__index = suit
 
+local id_counter = 1 -- TEMP: move this inside the class later
+
 function suit.new(theme)
 	return setmetatable({
 		-- TODO: deep copy/copy on write? better to let user handle => documentation?
@@ -31,9 +33,18 @@ end
 -- helper
 function suit.getOptionsAndSize(opt, ...)
 	if type(opt) == "table" then
+		opt.id = opt.id or id_counter
+		id_counter = id_counter + 1
+		
 		return opt, ...
 	end
-	return {}, opt, ...
+
+	local defaultTable = {
+		id = id_counter,
+	}
+
+	id_counter = id_counter + 1
+	return defaultTable, opt, ...
 end
 
 -- gui state
@@ -216,6 +227,7 @@ function suit:draw()
 	self:enterFrame()
 
 	love.graphics.setFont (origFont)
+	id_counter = 1
 end
 
 return suit
