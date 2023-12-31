@@ -281,26 +281,6 @@ function theme.Input(input, opt, x,y,w,h)
 
 		love.graphics.setColor (theme.getColorForState(opt).fg)
 		love.graphics.line(x + offsetX, y + offsetY, x + offsetX, y + offsetY + fontHeight)
-
-		-- local cursorX = font:getWidth (wrappedString[#wrappedString])
-
-		-- if opt.align == "left" then
-		-- 	cursorX = cursorX + padLeft
-		-- elseif opt.align == "right" then
-		-- 	cursorX = cursorX 
-		-- end
-
-
-		-- local ws = math.min (font:getWidth(wrappedString), paddedWidth)
-		-- local th = theme.getFont (opt):getHeight ()
-		-- if ct.start == 0 then ws = 0 end
-
-		-- love.graphics.setLineWidth(1)
-		-- love.graphics.setLineStyle('rough')
-		-- love.graphics.setColor (theme.getColorForState(opt).fg)
-		
-
-		-- print (input.candidate_text.text, 1, input.cursor - 1)
 	end
 end
 

@@ -88,20 +88,54 @@ return function(core, input, ...)
 			input.cursor = utf8.len(input.text)+1
 		end
 
-		-- move cursor position with mouse when clicked on
+		-- Moves the cursor position to the character that the user clicked on
 		if core:mouseReleasedOn(opt.id) then
-			local mouseX, mouseY = core:getMousePosition() - x + input.text_draw_offset
+			local mouseX, mouseY = core:getMousePosition()
 
 			local font = core.theme.getFont (opt)
 			local fontHeight = font:getHeight ()
+			local padLeft, padRight, padTop, padBottom = core.theme.getPadding (opt)
 
-			input.cursor = utf8.len(input.text) + 1
-			for c = 1,input.cursor do
-				local s = input.text:sub(0, utf8.offset(input.text, c)-1)
-				if opt.font:getWidth(s) >= mouseX then
-					input.cursor = c-1
-					break
+			local paddedWidth = w - padLeft - padRight
+			-- Grab the wrapped string to iterate on it row by row
+			local _, wrappedString = font:getWrap(input.text, paddedWidth)
+
+			-- Offset the mouse position to find the nearest text row
+			local row = math.ceil ((mouseY - padTop - y) / fontHeight)
+
+			local stringToSearch = wrappedString[row]
+
+			if stringToSearch == nil then
+				input.cursor = 1 -- Set to one if the row doesn't contain text yet
+			else
+				input.cursor = utf8.len(stringToSearch) + 1 -- Max position for the cursor in the given row
+				
+				-- Iterate through each character in the row to see which one is closest to the cursor
+				local lastLength = 0
+				for i = 1, input.cursor do
+					-- Get the characters up to the cursor position
+					local subString = input.text:sub(0, utf8.offset(stringToSearch, i)-1)
+					local currentLength = opt.font:getWidth(subString)
+					
+					if currentLength >= mouseX - x - padLeft then
+						-- Round to nearest character
+						if (mouseX - x - padLeft - lastLength) / (currentLength - lastLength) > 0.50 then
+							input.cursor = i
+						else
+							input.cursor = i-1
+						end
+						break
+					end
+
+					lastLength = currentLength
 				end
+
+				-- Calculate the final position by adding the sum of the characters in the previous rows
+				local sum = 0
+				for i = 1, row - 1 do
+					sum = sum + wrappedString[i]:len ()
+				end
+				input.cursor = input.cursor + sum
 			end
 		end
 	end
