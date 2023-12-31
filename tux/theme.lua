@@ -204,11 +204,20 @@ function theme.Checkbox(chk, opt, x, y, w, h)
 	theme.drawBox(x+h/10, y+h/10, h*.8, h*.8, opt)
 
 	if chk.checked then
+		local origStyle = love.graphics.getLineStyle ()
+		local origWidth = love.graphics.getLineWidth ()
+		local origJoin = love.graphics.getLineJoin ()
+
 		love.graphics.setLineStyle('smooth')
 		love.graphics.setLineWidth(5)
 		love.graphics.setLineJoin("bevel")
+
 		love.graphics.setColor (renderColor.fg)
 		love.graphics.line(x+h*.2, y+h*.55, x+h*.45, y+h*.75, x+h*.8, y+h*.2)
+
+		love.graphics.setLineStyle(origStyle)
+		love.graphics.setLineWidth(origWidth)
+		love.graphics.setLineJoin(origJoin)
 	end
 
 	if chk.text then
@@ -250,7 +259,6 @@ function theme.Input(input, opt, x, y, w, h)
 	opt.align = "left"
 	opt.valign = "top"
 
-	local utf8 = require 'utf8'
 	theme.drawBox(x, y, w, h, opt)
 
 	-- text
@@ -262,10 +270,13 @@ function theme.Input(input, opt, x, y, w, h)
 
 	
 	-- candidate text rectangle box
-	opt.rectMode = opt.rectMode or "line"
-	theme.drawBox (x, y, w, h, opt)
+	if opt.hasKeyboardFocus and opt.highlight ~= false then
+		local cornerRadius = opt.cornerRadius or theme.cornerRadius
+		love.graphics.setColor (theme.getColorForState (opt).fg)
+		love.graphics.rectangle ("line", x, y, w, h, cornerRadius)
+	end
 
-	-- cursor
+	-- Cursor rendering
 	if opt.hasKeyboardFocus and (love.timer.getTime() % 1) > .5 then
 		local font = theme.getFont (opt)
 		local fontHeight = font:getHeight ()
