@@ -204,6 +204,8 @@ function suit:registerDraw(f, ...)
 end
 
 function suit:draw()
+	local origFont = love.graphics.getFont ()
+	
 	self:exitFrame()
 	love.graphics.push('all')
 	for i = self.draw_queue.n,1,-1 do
@@ -212,6 +214,8 @@ function suit:draw()
 	love.graphics.pop()
 	self.draw_queue.n = 0
 	self:enterFrame()
+
+	love.graphics.setFont (origFont)
 end
 
 return suit

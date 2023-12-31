@@ -90,11 +90,15 @@ return function(core, input, ...)
 
 		-- move cursor position with mouse when clicked on
 		if core:mouseReleasedOn(opt.id) then
-			local mx = core:getMousePosition() - x + input.text_draw_offset
+			local mouseX, mouseY = core:getMousePosition() - x + input.text_draw_offset
+
+			local font = core.theme.getFont (opt)
+			local fontHeight = font:getHeight ()
+
 			input.cursor = utf8.len(input.text) + 1
 			for c = 1,input.cursor do
 				local s = input.text:sub(0, utf8.offset(input.text, c)-1)
-				if opt.font:getWidth(s) >= mx then
+				if opt.font:getWidth(s) >= mouseX then
 					input.cursor = c-1
 					break
 				end
