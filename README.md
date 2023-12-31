@@ -26,6 +26,9 @@ This library should support most of SUIT's features right now, although that may
 - Better text input boxes
   - Input boxes support multiline text
   - Input boxes are highlighted while the user is typing. This can be disabled by setting opt.highlight to false
+- Automatically generated IDs
+  - IDs are now generated automatically for each UI item you render. This should eliminate the need to assign custom IDs to UI items with the same text
+  - However, you can still assign custom IDs by changing the value of opt.id
 
 ## Documentation?
 
