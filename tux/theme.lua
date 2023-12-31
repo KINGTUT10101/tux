@@ -51,7 +51,8 @@ end
 -- @return (number) The top edge padding
 -- @return (number) The bottom edge padding
 function theme.getPadding (opt)
-	local padX, padY = opt.padX or 0, opt.padY or 0
+	local padAll = opt.padAll or 0
+	local padX, padY = opt.padX or padAll, opt.padY or padAll
 	local padLeft, padRight = opt.padLeft or padX, opt.padRight or padX
 	local padTop, padBottom = opt.padTop or padY, opt.padBottom or padY
 
