@@ -258,6 +258,7 @@ end
 --- An input box that supports multiline text editing and keyboard navigation.
 -- Alignment is ignored and always set to the top-left
 -- Set opt.highlight to false to remove the highlight when users are typing in the box
+-- @todo Make it so the user can click enter to insert a newline rather than triggering the submitted event
 function theme.Input(input, opt, x, y, w, h)
 	opt.state = "normal" -- Prevents the label from changing state
 	opt.align = "left"

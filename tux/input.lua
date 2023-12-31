@@ -106,7 +106,7 @@ return function(core, input, ...)
 			local stringToSearch = wrappedString[row]
 
 			if stringToSearch == nil then
-				input.cursor = 1 -- Set to one if the row doesn't contain text yet
+				input.cursor = input.text:len () + 1 -- Set to one if the row doesn't contain text yet
 			else
 				input.cursor = utf8.len(stringToSearch) + 1 -- Max position for the cursor in the given row
 				
