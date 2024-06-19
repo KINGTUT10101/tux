@@ -2,9 +2,9 @@
 
 > **NOTE: This project is no longer being developed in favor of** [**Tux Redux**](https://github.com/KINGTUT10101/TuxRedux)**, a complete remake of Tux/SUIT**
 
-An improved version of SUIT with more components, a better layout system, and a GUI manager. This project will be updated once I finish my current project, Just Another Sand Game.
+An improved version of SUIT with more components, a better layout system, and a GUI manager.
 
-This library should support most of SUIT's features right now, although that may change in the future as new features are added. Here's a quick overview of the current features and how you can use them (better docs will be provided some time in the future):
+This library should support most of SUIT's features. Here's a quick overview of the current features and how you can use them:
 
 *   Padding
     *   Most UI items now support padding, which can shift the internal elements away from the item's edges
